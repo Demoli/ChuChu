@@ -29,3 +29,6 @@ func _input(event):
 	if event is InputEventMouseButton:
 		if event.pressed and  event.button_index == BUTTON_RIGHT:
 			set_tile_at_world_positition(get_global_mouse_position(), AllowedTiles.TILE_BLANK)
+
+func get_class():
+	return "LevelTileMap"

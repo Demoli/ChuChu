@@ -19,6 +19,9 @@ func _process(delta: float) -> void:
 		
 	var cell = tailCell
 	
+	if get_slide_collision(0):
+		return
+	
 	if cell == level_tiles.AllowedTiles.TILE_UP:
 		turn_up()
 	if cell == level_tiles.AllowedTiles.TILE_RIGHT:
@@ -33,10 +36,22 @@ func _physics_process(delta: float) -> void:
 	velocity = Vector2(1, 0).rotated(rotation) * speed
 	velocity = move_and_slide(velocity)
 
-	for index in get_slide_count():
-		# handle collisions
-		var colliding = get_slide_collision(index)
-		if colliding:
+	# handle collisions
+	var colliding = get_slide_collision(0)
+	if colliding:
+		if colliding.collider.get_class() == "LevelWall":
+			var BounceDirection = colliding.collider.BounceDirection
+			match colliding.collider.bounce_dir:
+				BounceDirection.UP:
+					turn_up()
+				BounceDirection.RIGHT:
+					turn_right()
+				BounceDirection.DOWN:
+					turn_down()
+				BounceDirection.LEFT:
+					turn_left()
+			return
+		if colliding.collider.get_class() == "LevelTileMap":
 			var colliding_cell = level_tiles.get_cell_at_world_position(colliding.position)
 			if colliding_cell == level_tiles.WallTiles.WALL_TOP:
 				turn_left()
@@ -46,6 +61,7 @@ func _physics_process(delta: float) -> void:
 				turn_left()
 			if colliding_cell == level_tiles.WallTiles.WALL_LEFT:
 				turn_up()
+			return
 
 func turn_up():
 	rotation_degrees = -90

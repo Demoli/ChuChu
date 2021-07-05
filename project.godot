@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "LevelTileMap",
 "language": "GDScript",
 "path": "res://Scene/TileMapScene/TileMapScene.gd"
+}, {
+"base": "StaticBody2D",
+"class": "LevelWall",
+"language": "GDScript",
+"path": "res://Scene/WallScene/WallScene.gd"
 } ]
 _global_script_class_icons={
-"LevelTileMap": ""
+"LevelTileMap": "",
+"LevelWall": ""
 }
 
 [application]
@@ -23,6 +29,11 @@ _global_script_class_icons={
 config/name="ChuChu"
 run/main_scene="res://Scene/GameScene/GameScene.tscn"
 config/icon="res://icon.png"
+
+[display]
+
+window/size/width=800
+window/size/height=800
 
 [editor_plugins]
 
